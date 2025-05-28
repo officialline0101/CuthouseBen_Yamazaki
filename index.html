@@ -1381,7 +1381,7 @@ for (let checkTime = new Date(slotStart.getTime()); checkTime < slotEnd; checkTi
     });
 
     // 同時に重なっている予約が3件以上ある場合は上限オーバーとする
-    if (overlapping >= 4) {
+    if (overlapping >= 2) {
         overLimit = true; // 上限を超えたフラグを立てる
         break; // これ以上チェックせずにループを抜ける
     }
