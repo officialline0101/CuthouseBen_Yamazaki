@@ -1294,6 +1294,19 @@ limitDate.setDate(now.getDate() + 30);
                         continue;
                     }
 
+// 09:30～17:07の間はすべて✕にする
+const nowHour = now.getHours();
+const nowMinute = now.getMinutes();
+const nowTime = nowHour * 60 + nowMinute; // 分単位で現在時刻を取得
+const startLimit = 9 * 60 + 30;  // 09:30 → 570分
+const endLimit = 18 * 60 + 0;    // 17:07 → 1027分
+
+if (nowTime >= startLimit && nowTime <= endLimit) {
+    cell.textContent = '✕';
+    cell.classList.add('unavailable');
+    continue;
+}
+
                     const slotStart = new Date(day);
                     slotStart.setHours(parseInt(times[j].split(':')[0]), parseInt(times[j].split(':')[1]), 0, 0);
 
