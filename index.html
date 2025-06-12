@@ -1277,13 +1277,19 @@
                 }
             }
 
-
             // 現在の日時を取得
             const now = new Date();
 
             // ✖にする期限を設定：今日から10日後
             const limitDate = new Date(now);
             limitDate.setDate(now.getDate() + 10);
+
+// 09:30〜18:59 のリアルタイム時間帯を分に変換して判定
+const nowHour = now.getHours();
+const nowMinute = now.getMinutes();
+const nowTimeInMinutes = nowHour * 60 + nowMinute;
+const realTimeStart = 9 * 60 + 30;   // 09:30 = 570分
+const realTimeEnd = 18 * 60 + 59;    // 18:59 = 1139分
 
             // テーブルの内容を更新
             for (let i = 0; i < 7; i++) {
@@ -1309,12 +1315,12 @@
                         continue;
                     }
 
-                    const dayOfWeek = day.getDay();  // 曜日を取得（0=日曜, 1=月曜, ..., 6=土曜）
-                    const nowHour = now.getHours();
-                    const nowMinute = now.getMinutes();
-                    const nowTime = nowHour * 60 + nowMinute;
-                    const startLimit = 9 * 60 + 30;   // 9:30
-                    const endLimit = 19 * 60;         // 18:00
+        // 🔴 ここが追加処理：リアルタイムが9:30～18:59のときはすべて✕
+        if (nowTimeInMinutes >= realTimeStart && nowTimeInMinutes <= realTimeEnd) {
+            cell.textContent = '✕';
+            cell.classList.add('unavailable');
+            continue;
+        }
 
                     const slotStart = new Date(day);
                     slotStart.setHours(parseInt(times[j].split(':')[0]), parseInt(times[j].split(':')[1]), 0, 0);
@@ -1403,7 +1409,7 @@
                         });
 
                         // 同時に重なっている予約が3件以上ある場合は上限オーバーとする
-                        if (overlapping >= 1) {
+                        if (overlapping >= 2) {
                             overLimit = true; // 上限を超えたフラグを立てる
                             break; // これ以上チェックせずにループを抜ける
                         }
