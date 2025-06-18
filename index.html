@@ -740,6 +740,7 @@
             <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">パーマ(90分)</button>
             <button type="button" onclick="selectSymptom(this, 'treatment4')" data-price="15000">トリートメント(90分)</button>
             <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">頭皮ケア(30分)</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">縮毛矯正(180分)</button>
         </div>
         <div class="highlight-background">
             <span class="highlight-text">オプション</span>
@@ -846,10 +847,10 @@
             'カット(60分)': 60,
             'カラー(90分)': 120,
             'パーマ(90分)': 120,
+            '縮毛矯正(180分)': 180,
             'トリートメント(90分)': 120,
             '頭皮ケア(30分)': 30
         };
-
 
         let selectedMenuTime = 0;
 
@@ -1284,12 +1285,12 @@
             const limitDate = new Date(now);
             limitDate.setDate(now.getDate() + 10);
 
-// 09:30〜18:59 のリアルタイム時間帯を分に変換して判定
 const nowHour = now.getHours();
 const nowMinute = now.getMinutes();
 const nowTimeInMinutes = nowHour * 60 + nowMinute;
 const realTimeStart = 9 * 60 + 30;   // 09:30 = 570分
 const realTimeEnd = 18 * 60 + 59;    // 18:59 = 1139分
+const isMonday = now.getDay() === 1; // 月曜判定（1が月曜日）
 
             // テーブルの内容を更新
             for (let i = 0; i < 7; i++) {
@@ -1315,12 +1316,12 @@ const realTimeEnd = 18 * 60 + 59;    // 18:59 = 1139分
                         continue;
                     }
 
-        // 🔴 ここが追加処理：リアルタイムが9:30～18:59のときはすべて✕
-        if (nowTimeInMinutes >= realTimeStart && nowTimeInMinutes <= realTimeEnd) {
-            cell.textContent = '✕';
-            cell.classList.add('unavailable');
-            continue;
-        }
+// 🔴 ここが追加処理：リアルタイムが9:30～18:59のときはすべて✕（ただし月曜除外）
+if (!isMonday && nowTimeInMinutes >= realTimeStart && nowTimeInMinutes <= realTimeEnd) {
+    cell.textContent = '✕';
+    cell.classList.add('unavailable');
+    continue;
+}
 
                     const slotStart = new Date(day);
                     slotStart.setHours(parseInt(times[j].split(':')[0]), parseInt(times[j].split(':')[1]), 0, 0);
