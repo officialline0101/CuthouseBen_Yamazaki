@@ -827,8 +827,6 @@
             <div class="info-textmenu">パーマカット/料金：9,130円〜</div>
             <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">縮毛矯正（180分）</button>
             <div class="info-textmenu">縮毛矯正/料金：16,500円</div>
-            <button type="button" onclick="selectSymptom(this, 'treatment6')" data-price="15000">トリートメント（30分）</button>
-            <div class="info-textmenu">トリートメント/料金：3,300円〜</div>
             <button type="button" onclick="selectSymptom(this, 'treatment7')" data-price="15000">髪質改善トリートメント（90分）</button>
             <div class="info-textmenu">髪質改善トリートメント/料金：11,000円</div>
             <button type="button" onclick="selectSymptom(this, 'treatment8')" data-price="15000">頭皮ケア（30分）</button>
@@ -840,6 +838,8 @@
         <div class="irradiations">
             <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="15000">ブリーチ(カラー選択の方のみ/60分)</button>
             <button type="button" id="repeatirradiations" onclick="selectirradiations(this)" data-price="15000">ハイライト(カラー選択の方のみ/60分)</button>
+            <button type="button" id="thirdirradiations" onclick="selectirradiations(this)" data-price="15000">トリートメント（30分）</button>
+            <div class="info-textmenu" style="flex-basis: 100%;">トリートメント/料金：3,300円〜</div>
         </div>
 
         <div class="label">希望日時<span class="required">必須</span></div>
@@ -930,7 +930,8 @@
         // 訪問回数ごとの時間設定 (例：初めて=20分、2回目以降=15分)
         let irradiationsTimes = {
             'ブリーチ(カラー選択の方のみ/60分)': 60,
-            'ハイライト(カラー選択の方のみ/60分)': 60
+            'ハイライト(カラー選択の方のみ/60分)': 60,
+            'トリートメント（30分）': 30
         };
 
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
@@ -941,7 +942,6 @@
             'カラーカット（120分）': 120,
             'パーマカット（120分）': 120,
             '縮毛矯正（180分）': 180,
-            'トリートメント（30分）': 30,
             '髪質改善トリートメント（90分）': 90,
             '頭皮ケア（30分）': 30
         };
